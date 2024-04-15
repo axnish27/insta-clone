@@ -1,0 +1,15 @@
+
+<%= link_to "Create a Post", new_post_path %>
+<ul>
+  <% @posts.each do |post| %>
+    <%= post.username %>
+    <li>
+        <%= post.content %>
+    </li>
+
+    <li>
+        <%= post.caption%>
+    </li>
+
+  <% end %>
+</ul>
