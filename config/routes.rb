@@ -2,5 +2,7 @@ Rails.application.routes.draw do
   root to: "users#index"
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
-  resources :post
+  resources :posts
+  resources :follows
+  resources :likes
 end

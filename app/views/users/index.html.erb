@@ -1,3 +1,36 @@
 <h1> Authenticated </h1>
 
+<% @users.each do |user| %>
+   <%= user.name%>
+   <% if @followings.include?(user) %>
+   <div>
+      <%= button_to "Following", @follow , :disabled => true %>
+
+      <%# #method 2
+      #passssssssss in aaaaaaaaaaaaaa objecttttttttttttt to delete not a new object change the controller
+      <%= button_to "Destroy", @follow, method: :delete  %>
+      </div>
+    <% else %>
+    <div>
+      <%= button_to "Follow", @follow , data: { disable_with: "following" } , params: { :followee_id => user.id }  %>
+    </div>
+    <% end %>
+
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
 <%= link_to "Sign Out", destroy_user_session_path %>
