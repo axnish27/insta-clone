@@ -11,5 +11,13 @@
         <%= post.caption%>
     </li>
 
+    <%if @likeds.include?(post.id)%>
+      <%= button_to "Liked", @like , :disabled => true %>
+    <%else%>
+      <%= button_to "Like", @like , data: { disable_with: "Liked" } , params: { like: { post_id: post.id, follower_id: current_user.id } } %>
+    <%end%>
+
+
+
   <% end %>
 </ul>
