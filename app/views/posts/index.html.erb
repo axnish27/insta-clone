@@ -2,7 +2,7 @@
 <%= link_to "Create a Post", new_post_path %>
 <ul>
   <% @posts.each do |post| %>
-    <%= post.username %>
+    <%= post.user.username %>
     <li>
         <%= post.content %>
     </li>
@@ -10,12 +10,31 @@
     <li>
         <%= post.caption%>
     </li>
+    <% follower_ids = post.likes.pluck(:follower_id)%>
 
-    <%if @likeds.include?(post.id)%>
+    <% if follower_ids.include?(current_user.id)%>
       <%= button_to "Liked", @like , :disabled => true %>
     <%else%>
       <%= button_to "Like", @like , data: { disable_with: "Liked" } , params: { like: { post_id: post.id, follower_id: current_user.id } } %>
     <%end%>
+
+
+    <%= form_with model:@comment  do |form| %>
+      <%= form.hidden_field :follower_id, value: current_user.id %>
+      <%= form.hidden_field :post_id, value: post.id %>
+      <%= form.label :comment_text, "Comment:" %>
+      <%= form.text_field :comment_text %>
+      <%= form.submit "Submit" %>
+    <% end %>
+
+
+    <% comments = post.comments.last(5)%>
+    <% comments.each do |comment|%>
+    <%= comment.comment_text%>
+    <%end%>
+    <%= link_to "see more" , comment_path(post.id)%>
+    <br>
+    <br>
 
 
 

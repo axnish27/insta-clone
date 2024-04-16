@@ -3,7 +3,7 @@ class LikesController < ApplicationController
   def create
     @like = Like.new(likes_params)
     if @like.save
-
+      redirect_to posts_path
     else
     end
   end

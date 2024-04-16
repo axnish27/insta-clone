@@ -1,0 +1,10 @@
+<%= link_to "Go Back" , :back%>
+
+<ul>
+    <% @comments.each do |comment|%>
+    <li>Username <%= comment.follower.username%></li>
+    <li><%= comment.comment_text%></li>
+    <br>
+    <%end%>
+
+</ul>

@@ -1,13 +1,21 @@
 class PostsController < ApplicationController
 
   def index
-    @posts = User.joins(:posts).select('users.*, posts.*') #selects all the field from both the table
+
+    @posts = Post.all
     @like = Like.new
-    @likes = Like.where("follower_id = #{current_user.id}").select(:post_id)
-    @likeds = []
-    @likes.each do |like|
-      @likeds.push(like.post_id)
-    end
+    @comment = Comment.new
+
+    # @posts = User.joins(:posts).select('users.*, posts.*') #selects all the field from both the table 
+    # @likes = Like.where("follower_id = #{current_user.id}").select(:post_id)
+    # @likeds = []
+    # @likes.each do |like|
+    #   @likeds.push(like.post_id)
+    # end
+
+
+
+
   end
 
   def new
