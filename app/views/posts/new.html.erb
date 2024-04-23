@@ -2,6 +2,8 @@
   <%= form.hidden_field :user_id, value: current_user.id %>
   <%= form.label :content, "content:" %>
   <%= form.text_field :content %>
+  <%= form.label :post_img, "Post an Image:" %>
+  <%= form.file_field :post_img %>
   <%= form.label :caption, "caption:" %>
   <%= form.text_field :caption %>
   <%= form.submit "Submit" %>

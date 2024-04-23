@@ -1,8 +1,65 @@
 
+<%= link_to "Users", root_path %> <br>
 <%= link_to "Create a Post", new_post_path %>
+<ul>
+  <% @user.follows.includes(following: [:posts, :likes, comments: :follower]).each do |follow| %>
+    <% follow.following.posts.includes(:likes, :comments).each do |post| %>
+      <li>
+        <%= post.content %>
+      </li>
+
+      <li>
+        <%= post.caption %>
+      </li>
+
+      <% follower_ids = post.likes.pluck(:follower_id) %>
+
+      <% if follower_ids.include?(current_user.id) %>
+        <%= button_to "Liked", @like, :disabled => true %>
+      <% else %>
+        <%= button_to "Like", @like, data: { disable_with: "Liked" }, params: { like: { post_id: post.id, follower_id: current_user.id } } %>
+      <% end %>
+
+      <%= form_with model: @comment do |form| %>
+        <%= form.hidden_field :follower_id, value: current_user.id %>
+        <%= form.hidden_field :post_id, value: post.id %>
+        <%= form.label :comment_text, "Comment:" %>
+        <%= form.text_field :comment_text %>
+        <%= form.submit "Submit" %>
+      <% end %>
+
+      <% comments = post.comments.last(5) %>
+      <% comments.each do |comment| %>
+        <%= comment.comment_text %>
+      <% end %>
+      <%= link_to "see more", comment_path(post.id) %>
+      <br>
+      <br>
+    <% end %>
+  <% end %>
+</ul>
+<br>
+<br>
+
+    <% @my_posts.each do |post| %>
+      <li><%= current_user.username %></li>
+      <li><%= post.content %></li>
+      <li><%= post.caption%></li>
+      <% if post.post_img.attached? %>
+      <div class="post-pic">
+          <%= image_tag post.post_img, width: "300px" , height: "300px"  %>
+      </div>
+      <% end %>
+    <% end %>
+
+
 <ul>
   <% @user.follows.each do |follow|%>
     <% follow.following.posts.each do |post|%>
+
+    <li>
+        <%= follow.following.username %>
+    </li>
     <li>
         <%= post.content %>
     </li>
@@ -11,7 +68,14 @@
         <%= post.caption%>
     </li>
 
-    
+    <% if post.post_img.attached? %>
+    <div class="profile-pic">
+        <%= image_tag post.post_img , width: "300px" , height: "300px"  %>
+    </div>
+    <% end %>
+    <br>
+
+
     <% follower_ids = post.likes.pluck(:follower_id)%>
 
     <% if follower_ids.include?(current_user.id)%>

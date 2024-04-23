@@ -5,7 +5,7 @@ def index
 
   @followings = current_user.follows.pluck(:followee_id)
   @pendings = current_user.sent_requests.pluck(:id)
-  @follow_requests = User.includes(:recived_requests).find(1)
+  @follow_requests = User.includes(:recived_requests).find(current_user.id)
 
   @request = Request.new
   @follow = Follow.new

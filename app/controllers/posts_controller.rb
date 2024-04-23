@@ -3,8 +3,8 @@ class PostsController < ApplicationController
   def index
 
     @user = User.includes(follows: { following: [:posts, :likes, :comments] }).find(current_user.id)
+    @my_posts = Post.where(user_id: current_user.id)
 
-    
     # @posts = @user.follows.map do |follow|
     #   follow.following.posts
     # end
@@ -44,9 +44,11 @@ class PostsController < ApplicationController
 
   end
 
+
+
 private
 def post_params
-  params.require(:post).permit(:user_id,:content,:caption)
+  params.require(:post).permit(:user_id,:content,:caption,:post_img)
 end
 
 
