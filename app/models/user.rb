@@ -24,6 +24,8 @@ class User < ApplicationRecord
   validates :username, presence: true ,length: { minimum: 3, maximum: 25 } , uniqueness: true
 
 
+  after_create :send_mail
+
 
   def self.from_omniauth(access_token)
     data = access_token.info
@@ -38,5 +40,13 @@ class User < ApplicationRecord
     # end
     user
 end
+
+
+private
+
+  def send_mail
+    UserMailer.welcome_user_mail(self).deliver_later
+  end
+
 
 end
