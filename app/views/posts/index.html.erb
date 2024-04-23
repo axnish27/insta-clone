@@ -1,8 +1,8 @@
 
 <%= link_to "Create a Post", new_post_path %>
 <ul>
-  <% @posts.each do |post| %>
-    <%= post.user.username %>
+  <% @user.follows.each do |follow|%>
+    <% follow.following.posts.each do |post|%>
     <li>
         <%= post.content %>
     </li>
@@ -10,6 +10,8 @@
     <li>
         <%= post.caption%>
     </li>
+
+    
     <% follower_ids = post.likes.pluck(:follower_id)%>
 
     <% if follower_ids.include?(current_user.id)%>
@@ -35,8 +37,6 @@
     <%= link_to "see more" , comment_path(post.id)%>
     <br>
     <br>
-
-
-
+  <% end %>
   <% end %>
 </ul>

@@ -1,0 +1,26 @@
+<h1>This is Her</h1>
+
+
+<%if @user.id == current_user.id %>
+    <%= form_with model: @user do |form| %>
+        <%= form.file_field :profile_pic %>
+        <%= form.submit "Submit" %>
+    <%end%>
+<% end%>
+
+
+
+<% if @user.profile_pic.attached? %>
+    <div class="profile-pic">
+        <%= image_tag @user.profile_pic , width: "300px" , height: "300px"  %>
+    </div>
+<% end %>
+
+<%= turbo_frame_tag "test_frame" do %>
+    <%= @user.name%><br>
+    <%= @user.username%><br>
+    <%= @user.dob%><br>
+    <%= @user.about%><br>
+    <%= @user.email%><br>
+<% end %>
+

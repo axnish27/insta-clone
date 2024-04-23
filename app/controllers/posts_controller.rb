@@ -2,11 +2,21 @@ class PostsController < ApplicationController
 
   def index
 
-    @posts = Post.all
+    @user = User.includes(follows: { following: [:posts, :likes, :comments] }).find(current_user.id)
+
+    
+    # @posts = @user.follows.map do |follow|
+    #   follow.following.posts
+    # end
+
+    # @posts.each do |post|
+    #    @post = Post.includes(:likes,:comments).find(post.id)
+    # end
+
     @like = Like.new
     @comment = Comment.new
 
-    # @posts = User.joins(:posts).select('users.*, posts.*') #selects all the field from both the table 
+    # @posts = User.joins(:posts).select('users.*, posts.*') #selects all the field from both the table
     # @likes = Like.where("follower_id = #{current_user.id}").select(:post_id)
     # @likeds = []
     # @likes.each do |like|
@@ -34,10 +44,10 @@ class PostsController < ApplicationController
 
   end
 
-  private
-  def post_params
-    params.require(:post).permit(:user_id,:content,:caption)
-  end
+private
+def post_params
+  params.require(:post).permit(:user_id,:content,:caption)
+end
 
 
 end

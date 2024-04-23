@@ -1,9 +1,18 @@
 class User < ApplicationRecord
-  has_many :follows
-  has_many :posts
-  has_many :likes
-  has_many :comments
+  #User.follows //followings
+  has_many :follows, foreign_key: "user_id"
+  #User.followers // followers
+  has_many :followers, foreign_key: "followee_id", class_name: "Follow"
 
+  has_many :posts
+
+  has_many :likes , foreign_key: "follower_id"
+  has_many :comments , foreign_key: "follower_id"
+  has_one_attached :profile_pic
+
+  has_many :sent_requests , foreign_key: "from_id", class_name: "Request"
+
+  has_many :recived_requests, foreign_key: "to_id", class_name: "Request"
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

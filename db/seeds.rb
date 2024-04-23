@@ -36,20 +36,20 @@
 # end
 
 
-50.times do
-  user_id = rand(1..22)
-  followee_id = rand(1..22)
+# 50.times do
+#   user_id = rand(1..22)
+#   followee_id = rand(1..22)
 
-  # Ensure user_id and followee_id are different
-  while user_id == followee_id
-    followee_id = rand(1..22)
-  end
+#   # Ensure user_id and followee_id are different
+#   while user_id == followee_id
+#     followee_id = rand(1..22)
+#   end
 
-  follow = Follow.create!(
-    user_id: user_id,
-    followee_id: followee_id
-  )
-end
+#   follow = Follow.create!(
+#     user_id: user_id,
+#     followee_id: followee_id
+#   )
+# end
 
 
 
@@ -103,6 +103,22 @@ end
 #     followee_id: followee_id
 #   )
 # end
+
+
+10.times do
+  from_id = rand(1..20)
+  to_id = 1
+
+  # Ensure from_id and to_id are different
+  while from_id == to_id
+    from_id = rand(1..20)
+  end
+
+  request = Request.create(
+    from_id: from_id,
+    to_id: to_id
+  )
+end
 
 
 
